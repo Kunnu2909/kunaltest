@@ -12,19 +12,22 @@ const { validationResult } = require('express-validator');
 const { getData } = require('../helpers/SqlOps');
 
 authOperations.signup = async (req, res) => {
+  console.log(req.body);
   const result = await validationResult(req);
+  //console.log(result);
   if (!result.isEmpty()) {
     console.log(result);
   }
   let { username, email, password } = req.body;
+  console.log(email)
   //   dbops.getData('user', 'email', email, (results) => {
   //     res.json(results);
   //   });
 
-  //  check if email exists;
+  //check if email exists;
   getUserData(email, (results) => {
     // console.log(results);
-    if (results.length) {
+    if (result.length == 0) {
       return res
         .status(501)
         .json({ error: 'Email already in use', status_code: 501 });
@@ -54,11 +57,11 @@ authOperations.signup = async (req, res) => {
 };
 
 authOperations.login = (req, res) => {
-  let { email, password } = req.body;
+  let { username, password } = req.body;
 
   //    verify token and password
 
-  getUserData(email, ([result]) => {
+  getUserData(username, ([result]) => {
     console.log(result);
     const { username, email } = req.body;
     //  check pass
@@ -75,10 +78,11 @@ authOperations.login = (req, res) => {
         res.json({
           result: 'Successfully Logged In',
           status_code: 200,
-          user_id: result.uid,
+          user_id: result.id,
           access_token: token,
         });
       }
+      
     });
   });
 };

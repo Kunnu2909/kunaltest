@@ -1,28 +1,18 @@
 var express = require('express');
 var mysql = require('mysql2');
 const routes = require('./routes');
+const db = require('./helpers/Connection');
 const app = express();
 const ErrorHandler = require('./helpers/ErrorHandler');
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
 
-var db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: 'mysql',
-  database: 'nodemysql',
-});
-
-db.connect(function (err) {
-  if (err) throw err;
-  console.log('Connected!');
-});
 
 app.get('/createdb', (req, res) => {
-  let sql = 'create database nodemysql';
+  let sql = 'create database mysqldemo';
   db.query(sql, (err, result) => {
     if (err) res.status(500).send(err);
     res.send(result);

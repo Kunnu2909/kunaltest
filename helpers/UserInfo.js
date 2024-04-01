@@ -1,9 +1,9 @@
 const db = require('../helpers/Connection');
 
-module.exports = getUserData = async (email, callback) => {
-  const inserts = [email];
+module.exports = getUserData = async (username, callback) => {
+  const inserts = [username];
   //   const sql = `select * from user where email = ` + db.escape(email);
-  let sql = 'select * from users where email = ?';
+  let sql = 'select * from users where username = ?';
   sql = db.format(sql, inserts);
 
   //   console.log(sql);

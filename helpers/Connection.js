@@ -1,9 +1,10 @@
+
 var mysql = require('mysql2');
 var db = mysql.createConnection({
    host: 'localhost',
    user: 'root',
-   password: 'mysql',
-   database: 'nodemysql',
+   password: 'Singapore123#',
+   database: 'demo',
 });
 
 db.connect(function (err) {
